@@ -2,32 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .custom-scroll::-webkit-scrollbar {
+    background-color: #fff;
+    width: 16px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background-color: #6c0e1a;
+    border-radius: 16px;
+    /* border: 4px solid #fff; */
+  }
+
+  .custom-scroll::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  .triangle-badge {
+    clip-path: polygon(55% 0%, 0 0, 0 45%);
   }
 }

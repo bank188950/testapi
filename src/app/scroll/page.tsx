@@ -42,7 +42,7 @@ const InfiniteScroll = () => {
 
   useEffect(() => {
     if (inView && currentPage < 5) setCurrentPage((prev) => prev + 1);
-  }, [inView]);
+  }, [inView, currentPage]);
 
   useEffect(() => {
     if (data) {
@@ -61,7 +61,7 @@ const InfiniteScroll = () => {
               className="h-20 border border-red-500 border-solid"
               key={item.id}
             >
-              {item.title}
+              {item.id}. {item.title}
             </div>
           ))}
           <div ref={ref}></div>

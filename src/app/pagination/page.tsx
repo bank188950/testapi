@@ -3,9 +3,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "react-query";
 
-import { getConfigLang } from "@/utils/helper";
-import contentLang from "@/lang/home.json";
-
+import langHome from "@/lang/home.json";
 import Pagination from "@/components/pagination";
 
 type PostType = {
@@ -15,9 +13,19 @@ type PostType = {
   body: string;
 };
 
+type LangHomeType = {
+  title: string;
+  content: string;
+};
+
+type LangType = "th" | "en";
+
 const PaginationPage = () => {
-  const dataConfig = getConfigLang(contentLang, "th");
-  const [configLang, setConfigLang] = useState(dataConfig);
+  const [lang, setLang] = useState<LangType>("th");
+  const [content, setContent] = useState<LangHomeType | null>(null);
+  useEffect(() => {
+    setContent(langHome[lang]);
+  }, [lang]);
 
   const [pageNumber, setPageNumber] = useState(1);
   const totalPages = 6;
@@ -45,8 +53,14 @@ const PaginationPage = () => {
 
   return (
     <>
-      <h1 className="mb-4 text-4xl">{configLang.title}</h1>
-      <p className="mb-4 text-xl">{configLang.content}</p>
+      <h1>{content?.title}</h1>
+      <p>{content?.content}</p>
+
+      <div className="flex gap-2">
+        <button onClick={() => setLang("th")}>TH</button>
+        <button onClick={() => setLang("en")}>EN</button>
+      </div>
+
       {isLoading ? (
         <p>Loading...</p>
       ) : (

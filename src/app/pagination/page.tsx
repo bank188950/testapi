@@ -13,16 +13,14 @@ type PostType = {
   body: string;
 };
 
-type LangHomeType = {
-  title: string;
-  content: string;
-};
-
 type LangType = "th" | "en";
 
 const PaginationPage = () => {
   const [lang, setLang] = useState<LangType>("th");
-  const [content, setContent] = useState<LangHomeType | null>(null);
+  const [content, setContent] = useState<(typeof langHome)[LangType] | null>(
+    null
+  );
+
   useEffect(() => {
     setContent(langHome[lang]);
   }, [lang]);

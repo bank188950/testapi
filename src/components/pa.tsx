@@ -7,7 +7,6 @@ const Pa = () => {
   return (
     <div>
       <Box number={100}></Box>|{a}
-      {process.env.FIREBASE}
     </div>
   );
 };

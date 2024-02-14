@@ -9,7 +9,7 @@ export default function Test() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["postList"],
     queryFn: async function () {
-      const response = await fetch("api");
+      const response = await fetch("api/hello");
       const data = await response.json();
       return data;
     },

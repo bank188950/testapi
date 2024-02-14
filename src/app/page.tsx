@@ -77,6 +77,13 @@ export default function Home() {
 
   return (
     <>
+      <div className="before:[&>p>span]:bg-red-500 before:[&>p>span]:absolute before:[&>p>span]:w-4 before:[&>p>span]:h-4 before:[&>p>span]:left-1 before:[&>p>span]:top-1 before:[&>p>span]:z-[-1]">
+        <p>
+          111
+          <br />
+          <span className="in block relative">222</span>
+        </p>
+      </div>
       <button onClick={notify}>Notify !</button>
       <ToastContainer
         position="top-center"

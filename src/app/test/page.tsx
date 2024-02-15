@@ -61,7 +61,16 @@ export default function Test() {
         }}
         trackGap={50}
       > */}
-      <MacScrollbar className="h-[calc(100vh-144px)]">
+      <MacScrollbar
+        className="h-[calc(100vh-144px)]"
+        thumbStyle={function () {
+          const thumbStyle: React.CSSProperties = {
+            backgroundColor: "red",
+            // borderRadius: "10px",
+          };
+          return thumbStyle;
+        }}
+      >
         <div>Content</div>
         <div>Content</div>
         <div>Content</div>

@@ -20,7 +20,7 @@ export default function Test() {
 
   return (
     <div className="w-1/2">
-      <div>
+      {/* <div>
         {isLoading ? (
           "Loading..."
         ) : isError ? (
@@ -39,10 +39,10 @@ export default function Test() {
       First
       <br />
       <br />
-      <Pa />
-      <MacScrollbar
+      <Pa /> */}
+      {/* <MacScrollbar
         minThumbSize={50}
-        className="h-48 w-30"
+        className="h-[calc(100vh-144px)] w-30 bg-slate-400"
         // suppressAutoHide={true}
         suppressScrollX={true}
         thumbStyle={function () {
@@ -60,7 +60,8 @@ export default function Test() {
           return trackStyle;
         }}
         trackGap={50}
-      >
+      > */}
+      <MacScrollbar className="h-[calc(100vh-144px)]">
         <div>Content</div>
         <div>Content</div>
         <div>Content</div>
@@ -73,6 +74,7 @@ export default function Test() {
         <div>Content</div>
         <div>Content</div>
         <div>Content</div>
+        {/* <div>Content</div>
         <div>Content</div>
         <div>Content</div>
         <div>Content</div>
@@ -80,8 +82,7 @@ export default function Test() {
         <div>Content</div>
         <div>Content</div>
         <div>Content</div>
-        <div>Content</div>
-        <div>Content</div>
+        <div>Content</div> */}
       </MacScrollbar>
     </div>
   );

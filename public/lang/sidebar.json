@@ -1,0 +1,76 @@
+{
+  "th": {
+    "sidebar": [
+      {
+        "name": "หน้าหลัก",
+        "path": "/landing"
+      },
+      {
+        "name": "รายการย่อ",
+        "path": "/short-list"
+      },
+      {
+        "name": "คลังข้อมูล",
+        "submenu": [
+          {
+            "name": "สร้างรายการสินค้า",
+            "path": "/stock"
+          },
+          {
+            "name": "รายการสินค้า",
+            "path": "/list-stock"
+          }
+        ]
+      },
+      {
+        "name": "ลูกค้า",
+        "path": "/customer"
+      },
+      {
+        "name": "ฐานข้อมูล",
+        "path": "/database"
+      },
+      {
+        "name": "การตั้งค่า",
+        "path": "/setting"
+      }
+    ]
+  },
+  "en": {
+    "sidebar": [
+      {
+        "name": "Landing",
+        "path": "/landind"
+      },
+      {
+        "name": "Short List",
+        "path": "/short-list"
+      },
+      {
+        "name": "Stock",
+        "submenu": [
+          {
+            "name": "Create Stock",
+            "path": "/stock"
+          },
+          {
+            "name": "List Stocks",
+            "path": "/list-stocks"
+          }
+        ]
+      },
+      {
+        "name": "Customer",
+        "path": "/customer"
+      },
+      {
+        "name": "Database",
+        "path": "/database"
+      },
+      {
+        "name": "Setting",
+        "path": "/setting"
+      }
+    ]
+  }
+}

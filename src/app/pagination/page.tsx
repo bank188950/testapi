@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
-import langHome from "@/lang/home.json";
 import Pagination from "@/components/pagination";
 
 type PostType = {
@@ -16,15 +15,6 @@ type PostType = {
 type LangType = "th" | "en";
 
 const PaginationPage = () => {
-  const [lang, setLang] = useState<LangType>("th");
-  const [content, setContent] = useState<(typeof langHome)[LangType] | null>(
-    null
-  );
-
-  useEffect(() => {
-    setContent(langHome[lang]);
-  }, [lang]);
-
   const [pageNumber, setPageNumber] = useState(1);
   const totalPages = 6;
 
@@ -51,14 +41,6 @@ const PaginationPage = () => {
 
   return (
     <>
-      <h1>{content?.title}</h1>
-      <p>{content?.content}</p>
-
-      <div className="flex gap-2">
-        <button onClick={() => setLang("th")}>TH</button>
-        <button onClick={() => setLang("en")}>EN</button>
-      </div>
-
       {isLoading ? (
         <p>Loading...</p>
       ) : (

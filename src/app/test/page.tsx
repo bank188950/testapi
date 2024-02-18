@@ -6,6 +6,8 @@ import Show from "@/components/show";
 import { useQuery } from "react-query";
 import "mac-scrollbar/dist/mac-scrollbar.css";
 import { MacScrollbar } from "mac-scrollbar";
+import Cookies from "js-cookie";
+import { cookies } from "next/headers";
 
 export default function Test() {
   const { data, isLoading, isError } = useQuery({
@@ -18,8 +20,11 @@ export default function Test() {
     staleTime: 2000,
   });
 
+  console.log(Cookies.get("lang"));
+
   return (
     <div className="w-1/2">
+      {Cookies.get("lang")}
       {/* <div>
         {isLoading ? (
           "Loading..."

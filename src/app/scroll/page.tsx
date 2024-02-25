@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
 
@@ -14,20 +14,24 @@ type PostType = {
 const InfiniteScroll = () => {
   const [allData, setAllData] = useState<PostType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [scrollY, setScrollY] = useState(0);
+  const scrollRef = useRef<null | HTMLDivElement>(null);
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["postList", currentPage],
     queryFn: function () {
       return fetchData(
         `https://jsonplaceholder.typicode.com/todos?_page=${currentPage}`
       );
     },
-    staleTime: 2000,
+    staleTime: 0,
   });
 
   const [ref, inView] = useInView({
     threshold: 0,
   });
+
+  const memoizedScrollY = useMemo(() => scrollY, [currentPage]);
 
   const fetchData = async (url: string) => {
     const response = await fetch(url);
@@ -41,17 +45,20 @@ const InfiniteScroll = () => {
   };
 
   useEffect(() => {
+    const currentScrollY: number = scrollRef.current?.scrollTop ?? 0;
+    setScrollY(currentScrollY);
     if (inView && currentPage < 5) setCurrentPage((prev) => prev + 1);
   }, [inView]);
 
   useEffect(() => {
     if (data) {
       setAllData((prev) => [...prev, ...data]);
+      scrollRef.current!.scrollTop = memoizedScrollY;
     }
-  }, [data]);
+  }, [isSuccess]);
 
   return (
-    <>
+    <div ref={scrollRef} className="h-96 w-64 overflow-y-auto">
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -67,7 +74,7 @@ const InfiniteScroll = () => {
           <div ref={ref}></div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

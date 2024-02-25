@@ -19,7 +19,7 @@ const TempData = () => {
     threshold: 0,
   });
 
-  async function selectDataList(currentPage: number): Promise<DataType[]> {
+  async function selectDataList(currentPage: number) {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/todos?_page=${currentPage}`
     );
@@ -27,9 +27,9 @@ const TempData = () => {
     return json;
   }
 
-  const { data, isLoading } = useQuery(["users", currentPage], () =>
-    selectDataList(currentPage)
-  );
+  const { data, isLoading } = useQuery(["users", currentPage], () => {
+    return selectDataList(currentPage);
+  });
 
   useEffect(() => {
     if (data) {
@@ -41,10 +41,9 @@ const TempData = () => {
   useEffect(() => {
     if (currentPage < 5) {
       const nextPage = currentPage + 1;
-      console.log("prefetching", nextPage);
-      queryClient.prefetchQuery(["users", nextPage], () =>
-        selectDataList(currentPage)
-      );
+      queryClient.prefetchQuery(["users", nextPage], () => {
+        return selectDataList(nextPage);
+      });
     }
   }, [currentPage]);
 

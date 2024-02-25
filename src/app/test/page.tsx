@@ -8,19 +8,13 @@ import "mac-scrollbar/dist/mac-scrollbar.css";
 import { MacScrollbar } from "mac-scrollbar";
 import Cookies from "js-cookie";
 import { cookies } from "next/headers";
-
+import { fetchProfileAuth } from "@/fetch/leftMenu";
 export default function Test() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["postList"],
-    queryFn: async function () {
-      const response = await fetch("api/hello");
-      const data = await response.json();
-      return data;
-    },
+    queryFn: fetchProfileAuth,
     staleTime: 2000,
   });
-
-  console.log(Cookies.get("lang"));
 
   return (
     <div className="w-1/2">

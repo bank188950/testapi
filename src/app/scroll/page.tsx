@@ -42,7 +42,7 @@ const InfiniteScroll = () => {
 
   useEffect(() => {
     if (inView && currentPage < 5) setCurrentPage((prev) => prev + 1);
-  }, [inView, currentPage]);
+  }, [inView]);
 
   useEffect(() => {
     if (data) {

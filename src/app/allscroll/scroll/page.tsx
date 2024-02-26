@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 
 type DataType = {
@@ -27,8 +27,11 @@ const TempData = () => {
     return json;
   }
 
-  const { data, isLoading } = useQuery(["users", currentPage], () => {
-    return selectDataList(currentPage);
+  const { data, isLoading } = useQuery({
+    queryKey: ["users", currentPage],
+    queryFn: () => {
+      return selectDataList(currentPage);
+    },
   });
 
   useEffect(() => {
@@ -41,8 +44,11 @@ const TempData = () => {
   useEffect(() => {
     if (currentPage < 5) {
       const nextPage = currentPage + 1;
-      queryClient.prefetchQuery(["users", nextPage], () => {
-        return selectDataList(nextPage);
+      queryClient.prefetchQuery({
+        queryKey: ["users", nextPage],
+        queryFn: () => {
+          return selectDataList(nextPage);
+        },
       });
     }
   }, [currentPage]);

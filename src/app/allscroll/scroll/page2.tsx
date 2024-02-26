@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 
 type DataType = {
@@ -19,12 +19,15 @@ const TempData = () => {
     threshold: 0,
   });
 
-  const { data, isLoading } = useQuery(["users", currentPage], async () => {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/todos?_page=${currentPage}`
-    );
-    const json = await response.json();
-    return json;
+  const { data, isLoading } = useQuery({
+    queryKey: ["users", currentPage],
+    queryFn: async () => {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos?_page=${currentPage}`
+      );
+      const json = await response.json();
+      return json;
+    },
   });
 
   useEffect(() => {
@@ -38,12 +41,15 @@ const TempData = () => {
     if (currentPage < 5) {
       const nextPage = currentPage + 1;
       console.log("prefetching", nextPage);
-      queryClient.prefetchQuery(["users", nextPage], async () => {
-        const response = await fetch(
-          `https://jsonplaceholder.typicode.com/todos?_page=${nextPage}`
-        );
-        const json = await response.json();
-        return json;
+      queryClient.prefetchQuery({
+        queryKey: ["users", nextPage],
+        queryFn: async () => {
+          const response = await fetch(
+            `https://jsonplaceholder.typicode.com/todos?_page=${nextPage}`
+          );
+          const json = await response.json();
+          return json;
+        },
       });
     }
   }, [currentPage]);

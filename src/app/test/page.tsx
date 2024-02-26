@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Pa from "@/components/pa";
 import Show from "@/components/show";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import "mac-scrollbar/dist/mac-scrollbar.css";
 import { MacScrollbar } from "mac-scrollbar";
 import Cookies from "js-cookie";

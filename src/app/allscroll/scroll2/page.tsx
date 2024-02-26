@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { selectMessageList, type messageDataType } from "./alertMessage";
 
@@ -13,15 +13,13 @@ const TempData = () => {
     threshold: 0,
   });
 
-  const { data: dataMessageList, isLoading } = useQuery(
-    ["users", currentPage],
-    () => {
+  const { data: dataMessageList, isLoading } = useQuery({
+    queryKey: ["users", currentPage],
+    queryFn: () => {
       return selectMessageList(currentPage);
     },
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     if (dataMessageList) {

@@ -1,13 +1,16 @@
 "use client";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 const LangPage = () => {
   const {
     isLoading: isLoadingSidebar,
     isSuccess: isSuccessSidebar,
     data: dataSidebar,
-  } = useQuery("sideBarLang", async () => {
-    const response = await fetch("lang/sidebar.json");
-    return await response.json();
+  } = useQuery({
+    queryKey: ["sideBarLang"],
+    queryFn: async () => {
+      const response = await fetch("lang/sidebar.json");
+      return await response.json();
+    },
   });
 
   if (isLoadingSidebar) return <div>Loading...</div>;

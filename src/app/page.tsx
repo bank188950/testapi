@@ -1,5 +1,5 @@
 "use client";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { PostType, postList } from "./postApi";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";

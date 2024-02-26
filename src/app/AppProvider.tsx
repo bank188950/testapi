@@ -1,20 +1,12 @@
 "use client";
 import React from "react";
 
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      onError: function (error: unknown) {
-        //console.log("Error in query:", error);
-      },
-    },
-  },
-});
+export const queryClient = new QueryClient();
 
 function AppProvider({
   children,

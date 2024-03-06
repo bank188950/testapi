@@ -4,6 +4,9 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
+import { useToast } from "@/hook/useToast";
+import Toast from "@/components/Toast";
+
 //import Select from "react-select";
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -54,8 +57,6 @@ export default function From() {
   };
 
   function messageError(field: keyof FromType): React.ReactNode {
-    console.log(errors[field]);
-
     return (
       errors[field] && (
         <span className="text-red-500">{errors[field]?.message}</span>
@@ -178,6 +179,18 @@ export default function From() {
     return () => fields.unsubscribe();
   }, [fieldsWatch]);
 
+  // const [showToast, setShowToast] = useState(false);
+
+  // const showMessageToast = () => {
+  //   setShowToast(true);
+  //   const timeoutId = setTimeout(() => {
+  //     setShowToast(false);
+  //     clearTimeout(timeoutId);
+  //   }, 3000);
+  // };
+
+  const { showToast, showMessageToast } = useToast(false, 3000);
+
   return (
     <>
       <div className="w-56">
@@ -255,36 +268,6 @@ export default function From() {
 
             <div className={`${stepActive === 0 ? "block" : "hidden"}`}>
               <div className="w-80 mt-4">
-                <Select
-                  options={fruitOptions}
-                  onChange={(value) => console.log(value)}
-                  value={{ value: "vanilla", label: "Vanilla" }}
-                />
-                <br />
-                <Controller
-                  control={control}
-                  name="colorList"
-                  rules={fieldValidate.colorList}
-                  render={({ field: { name, value, onChange, onBlur } }) => {
-                    return (
-                      <div className="border border-solid border-gray-500 w-80">
-                        <input
-                          type="text"
-                          name={name}
-                          value={value}
-                          onChange={onChange}
-                          onBlur={onBlur}
-                          placeholder="สีที่ต้องการ"
-                        />
-                      </div>
-                    );
-                  }}
-                />
-
-                {messageError("colorList")}
-              </div>
-
-              <div className="w-80 mt-4">
                 <select
                   className="bg-white border border-solid border-gray-500 w-full p-2"
                   {...register("project", fieldValidate.project)}
@@ -328,7 +311,33 @@ export default function From() {
               <br />
             </div>
             <div className={`${stepActive === 2 ? "block" : "hidden"}`}>
-              33333
+              <Select
+                options={fruitOptions}
+                onChange={(value) => console.log(value)}
+                value={{ value: "vanilla", label: "Vanilla" }}
+              />
+              <br />
+              <Controller
+                control={control}
+                name="colorList"
+                rules={fieldValidate.colorList}
+                render={({ field: { name, value, onChange, onBlur } }) => {
+                  return (
+                    <div className="border border-solid border-gray-500 w-80">
+                      <input
+                        type="text"
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        placeholder="สีที่ต้องการ"
+                      />
+                    </div>
+                  );
+                }}
+              />
+
+              {messageError("colorList")}
             </div>
             <div className={`${stepActive === 3 ? "block" : "hidden"}`}>
               44444
@@ -339,7 +348,17 @@ export default function From() {
       <br />
       <br />
       <h1 className="text-3xl mb-4">From</h1>
-      <p className="p-4">
+
+      {/* <div className={`toast show`}>1111111111111111</div> */}
+
+      <button onClick={showMessageToast}>Show Toast</button>
+      <Toast
+        message="Action completed successfully!"
+        type="success"
+        showToast={showToast}
+      />
+
+      <p className="mt-4">
         Show watch {`${watch("project")} ${watch("projectName")}`}
       </p>
 

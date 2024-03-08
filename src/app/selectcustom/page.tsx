@@ -1,6 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import React, { useState } from "react";
 import Select, { StylesConfig, components } from "react-select";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -84,8 +84,44 @@ const customStyles: StylesConfig<ColourOption> = {
 };
 
 export default function Blog() {
+  const handleColorData = function () {
+    setColorData([
+      { value: "", label: "กรุณาเลือกข้อมูล" },
+      { value: "ocean", label: "Ocean" },
+      { value: "blue", label: "Blue" },
+    ]);
+  };
+
+  const [colorData, setColorData] = useState(colourOptions);
+
   return (
     <>
+      <button
+        onClick={() => {
+          handleColorData();
+        }}
+      >
+        Change Data
+      </button>
+      <div className="w-1/2">
+        <Select
+          id="box1"
+          instanceId={`search`}
+          options={colorData}
+          styles={customStyles}
+          components={{
+            Input: (props) => (
+              <components.Input {...props} aria-activedescendant={undefined} />
+            ),
+          }}
+          onChange={() => {
+            handleColorData();
+          }}
+        />
+      </div>
+      <br />
+      <br />
+      <br />
       <h3>Have Search</h3>
       <div className="w-1/2">
         <Select

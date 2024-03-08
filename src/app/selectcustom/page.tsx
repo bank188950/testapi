@@ -46,6 +46,7 @@ const customStyles: StylesConfig<ColourOption> = {
       color: "#ffffff",
       backgroundColor: "#57a0ff",
     },
+    padding: "3px 16px",
     color: state.isFocused ? "#ffffff" : "#000000",
     borderRadius: "6px",
   }),

@@ -13,6 +13,7 @@ type FromType = {
   confirmPassword: string;
   check: string[];
   choose: string;
+  tel2: string;
 };
 
 export default function From() {
@@ -32,6 +33,13 @@ export default function From() {
     },
     tel: {
       required: { value: true, message: "กรุณากรอกเบอร์โทร" },
+      pattern: {
+        value: /^[0-9]{10}$/i,
+        message: "กรอกรูปแบบเบอร์โทรไม่ถูกต้อง",
+      },
+    },
+    tel2: {
+      required: { value: true, message: "กรุณากรอกเบอร์โทร 222" },
       pattern: {
         value: /^[0-9]{10}$/i,
         message: "กรอกรูปแบบเบอร์โทรไม่ถูกต้อง",
@@ -252,6 +260,17 @@ export default function From() {
           </div>
         </div>
       </form>
+
+      <div className="border border-solid border-gray-500 w-80  mt-4">
+        <input
+          id="tel2"
+          {...register("tel2", fieldValidate.tel2)}
+          className="w-full"
+          placeholder="เบอร์โทร"
+        />
+      </div>
+
+      {messageError("tel2")}
       {/* <DevTool control={control} placement="top-right" /> */}
     </>
   );

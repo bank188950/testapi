@@ -4,12 +4,13 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import Pagination from "@/components/pagination";
+import { a } from "@/utils/helper";
 
 type PostType = {
   userId: number;
   id: number;
   title: string;
-  body: string;
+  completed: boolean;
 };
 
 type LangType = "th" | "en";
@@ -28,7 +29,7 @@ const PaginationPage = () => {
     staleTime: 2000,
   });
 
-  const fetchData = async (url: string) => {
+  async function fetchData(url: string): Promise<PostType[]> {
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -37,7 +38,7 @@ const PaginationPage = () => {
 
     const data = await response.json();
     return data;
-  };
+  }
 
   return (
     <>
@@ -50,7 +51,7 @@ const PaginationPage = () => {
               className="h-10 border border-red-500 border-solid"
               key={item.id}
             >
-              {item.id}. {item.title}
+              {item.id}. {item.title} {item.completed ? "true" : "false"}
             </div>
           ))}
           <Pagination

@@ -1,8 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
-//import AsyncSelect from "react-select/async";
-const AsyncSelect = dynamic(() => import("react-select/async"), { ssr: false });
+//import dynamic from "next/dynamic";
+import AsyncSelect from "react-select/async";
+//const AsyncSelect = dynamic(() => import("react-select/async"), { ssr: false });
 
 type ColourOption = {
   readonly value: string;

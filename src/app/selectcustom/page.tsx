@@ -11,8 +11,8 @@ type ColourOption = {
 
 const colourOptions: ColourOption[] = [
   { value: "", label: "กรุณาเลือกข้อมูล" },
-  { value: "ocean", label: "Ocean" },
-  { value: "blue", label: "Blue" },
+  { value: "Ocean", label: "Ocean" },
+  { value: "Blue", label: "Blue" },
   { value: "purple", label: "Purple" },
   { value: "red", label: "Red" },
   { value: "orange", label: "Orange" },

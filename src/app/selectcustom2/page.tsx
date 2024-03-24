@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Select, { StylesConfig, components } from "react-select";
 import { IoIosArrowDown } from "react-icons/io";
-import { useThrottle } from "@uidotdev/usehooks";
 
 type ColourOption = {
   readonly value: string;
@@ -12,8 +11,8 @@ type ColourOption = {
 
 const colourOptions: ColourOption[] = [
   { value: "", label: "กรุณาเลือกข้อมูล" },
-  { value: "ocean", label: "Ocean" },
-  { value: "blue", label: "Blue" },
+  { value: "Ocean", label: "Ocean" },
+  { value: "Blue", label: "Blue" },
   { value: "purple", label: "Purple" },
   { value: "red", label: "Red" },
   { value: "orange", label: "Orange" },
@@ -96,38 +95,8 @@ export default function Blog() {
 
   const [colorData, setColorData] = useState(colourOptions);
 
-  const [val, setVal] = useState("");
-  const throttledValue = useThrottle(val, 2000);
-
-  const [delay, setDelay] = useState("");
-  const [input, setInput] = useState("");
-
-  useEffect(() => {
-    console.log("out: ", delay);
-    const time = setTimeout(() => {
-      console.log("in", delay);
-      setInput(delay);
-    }, 1500);
-
-    return () => {
-      clearTimeout(time);
-    };
-  }, [delay]);
-
   return (
     <>
-      <input
-        placeholder="Type some text"
-        style={{ background: "var(--charcoal)" }}
-        type="text"
-        value={val}
-        onChange={(e) => {
-          setVal(e.target.value);
-        }}
-        className="border border-gray-500"
-      />
-      <p>Val: {val}</p>
-      <p>Throttled: {throttledValue}</p>
       <button
         onClick={() => {
           handleColorData();
@@ -149,7 +118,6 @@ export default function Blog() {
           onChange={() => {
             handleColorData();
           }}
-          filterOption={() => false}
         />
       </div>
       <br />
@@ -162,19 +130,11 @@ export default function Blog() {
           instanceId={`search`}
           options={colourOptions}
           styles={customStyles}
-          value={colourOptions.find((list) => {
-            //console.log(list.value);
-            return list.value === "red";
-          })}
-          // value={colourOptions[5]}
-          onInputChange={(inputValue) => {
-            setDelay(inputValue);
+          components={{
+            Input: (props) => (
+              <components.Input {...props} aria-activedescendant={undefined} />
+            ),
           }}
-          // components={{
-          //   Input: (props) => (
-          //     <components.Input {...props} aria-activedescendant={undefined} />
-          //   ),
-          // }}
         />
       </div>
       <br />

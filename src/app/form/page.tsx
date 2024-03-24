@@ -130,6 +130,7 @@ export default function From() {
               className="bg-white border border-solid border-gray-500 w-full p-2"
               id="province"
               {...register("province", fieldValidate.province)}
+              value="2"
             >
               <option value="">เลือกจังหวัด</option>
               <option value="1">กรุงเทพ</option>

@@ -2,6 +2,7 @@
 
 import { Bounce, Zoom, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 export default function Home() {
   const notify = () => {
@@ -18,8 +19,13 @@ export default function Home() {
     });
   }; //
 
+  const size = useWindowSize();
+
   return (
     <>
+      <span>
+        {size.width} | {size.height}
+      </span>
       <main>
         <button className="p-4 bg-red-500" onClick={notify}>
           Notify !

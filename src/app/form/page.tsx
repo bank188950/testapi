@@ -14,6 +14,7 @@ type FromType = {
   check: string[];
   choose: string;
   tel2: string;
+  code: string;
 };
 
 export default function From() {
@@ -64,6 +65,38 @@ export default function From() {
     choose: {
       required: { value: true, message: "กรุณาเลือกเพศ" },
     },
+    code: {
+      validate: {
+        notAdmin: (value, formvalue) => {
+          //console.log("1", value, formvalue);
+          if (value !== "1234") {
+            return true;
+          } else {
+            return "duplicate 1";
+          }
+        },
+        notAdmin2: (value, formvalue) => {
+          if (value !== "5678") {
+            return true;
+          } else {
+            return "duplicate 2";
+          }
+        },
+        emailDuplicate: async (value) => {
+          const response = await fetch(
+            `https://jsonplaceholder.typicode.com/users?email=${value}`
+          );
+          const data = await response.json();
+          console.log(data);
+          if (data.length > 0) {
+            return "have email";
+          } else {
+            return true;
+          }
+        },
+      },
+      required: { value: true, message: "กรุณากรอกรหัส" },
+    },
   };
 
   const handleSave: SubmitHandler<FromType> = (data) => {
@@ -109,7 +142,7 @@ export default function From() {
 
   useEffect(() => {
     //trigger();
-    //trigger("province");
+    trigger("code");
   }, []);
 
   useEffect(() => {
@@ -244,6 +277,16 @@ export default function From() {
           </div>
 
           {messageError("choose")}
+
+          <div className="border border-solid border-gray-500 w-80">
+            <input
+              id="code"
+              {...register("code", fieldValidate.code)}
+              className="w-full"
+              placeholder="รหัส"
+            />
+          </div>
+          {messageError("code")}
 
           <div className="mt-4">
             <input

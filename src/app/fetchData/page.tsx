@@ -1,71 +1,114 @@
 "use client";
-import apiService from "@/utils/apiService";
+import Show from "./component/show";
+import Show2 from "./component/show2";
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Sidebar } from "@/lang/layout";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 
-type PostType = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
+export type FromType = {
+  fullname: string;
+  nickname: string;
+  email: string;
+  tel: string;
+};
+
+export const fieldValidate = {
+  fullname: {
+    required: { value: true, message: "กรุณากรอกชื่อ" },
+  },
+  nickname: {
+    required: { value: true, message: "กรุณากรอกชื่อเล่น" },
+  },
+  email: {
+    required: { value: true, message: "กรุณากรอกอีเมล" },
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+      message: "กรอกรูปแบบอีเมลไม่ถูกต้อง",
+    },
+  },
+  tel: {
+    required: { value: true, message: "กรุณากรอกเบอร์โทร" },
+    pattern: {
+      value: /^[0-9]{10}$/i,
+      message: "กรอกรูปแบบเบอร์โทรไม่ถูกต้อง",
+    },
+  },
 };
 
 const FetchPage = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["todos"],
-    queryFn: async () => fetchData(),
-    staleTime: 0,
-    retry: false,
+  const [loadContetTab, setLoadContetTab] = useState<number[] | []>([1]);
+
+  const [stateTab, setStateTab] = useState(1);
+
+  const methods = useForm<FromType>({
+    defaultValues: {
+      fullname: "fullname initial",
+      nickname: "",
+      email: "",
+      tel: "0822867567",
+    },
   });
 
-  async function fetchData(): Promise<PostType[]> {
-    const payload = {};
+  const {
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = methods;
 
-    const response = await apiService.get("/todos");
-
-    console.log(response);
-
-    // if (!response.ok) {
-    //   throw new Error("Failed to fetch data");
-    // }
-
-    const data = response.data;
-    return data;
-
-    // const { data } = await apiService.get("/todos");
-    // console.log(data);
-
-    // return data;
-
-    // const response = await fetch("https://jsonplaceholder.typicode.com/todos");
-
-    // if (!response.ok) {
-    //   throw new Error("Failed to fetch data");
-    // }
-
-    // const data = await response.json();
-    // return data;
+  function handleSave(data: FromType): void {
+    console.log(data);
+    console.log("save data");
   }
 
   return (
     <>
-      <h1>{Sidebar["th"].dashboard}</h1>
-      {/* <h1>{langLayout.th.dashboard}</h1> */}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          {data?.map((item: PostType) => (
-            <div
-              className="h-10 border border-red-500 border-solid"
-              key={item.id}
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(handleSave)} noValidate>
+          <button type="submit" className="border border-red-500">
+            Submit
+          </button>
+          <ul>
+            {watch("fullname")}
+            {watch("tel")}
+
+            {errors.fullname && <p>{errors.fullname.message}</p>}
+            {errors.tel && <p>{errors.tel.message}</p>}
+            <br />
+            <br />
+            <li
+              onClick={() => {
+                if (!loadContetTab.includes(1 as never)) {
+                  setLoadContetTab([...loadContetTab, 1]);
+                }
+
+                setStateTab(1);
+              }}
             >
-              {item.id}. {item.title} {item.completed ? "true" : "false"}
+              111
+            </li>
+            <li
+              onClick={() => {
+                if (!loadContetTab.includes(2 as never)) {
+                  setLoadContetTab([...loadContetTab, 2]);
+                }
+                setStateTab(2);
+              }}
+            >
+              222
+            </li>
+          </ul>
+          {loadContetTab.includes(1 as never) && (
+            <div className={stateTab === 1 ? "not-sr-only" : "sr-only"}>
+              <Show />
             </div>
-          ))}
-        </>
-      )}
+          )}
+
+          {loadContetTab.includes(2 as never) && (
+            <div className={stateTab === 2 ? "not-sr-only" : "sr-only"}>
+              <Show2 />
+            </div>
+          )}
+        </form>
+      </FormProvider>
     </>
   );
 };

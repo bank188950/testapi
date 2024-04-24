@@ -8,7 +8,7 @@ type FromType = {
   nickname: string;
   email: string;
   tel: string;
-  province: string;
+  province: string | number;
   password: string;
   confirmPassword: string;
   check: string[];
@@ -137,6 +137,7 @@ export default function From() {
       email: "",
       check: ["อ่านหนังสือ"],
       choose: "ชาย",
+      province: 2,
     },
   });
 
@@ -154,7 +155,8 @@ export default function From() {
     <>
       <h1 className="text-3xl mb-4">From</h1>
       <p className="p-4">
-        Show watch {`${watch("fullname")} ${watch("nickname")}`}
+        Show watch{" "}
+        {`${watch("fullname")} ${watch("nickname")} ${watch("province")}`}
       </p>
       <form onSubmit={handleSubmit(handleSave)} noValidate>
         <div className="w-1/2">
@@ -163,7 +165,7 @@ export default function From() {
               className="bg-white border border-solid border-gray-500 w-full p-2"
               id="province"
               {...register("province", fieldValidate.province)}
-              value="2"
+              // value="2"
             >
               <option value="">เลือกจังหวัด</option>
               <option value="1">กรุงเทพ</option>
